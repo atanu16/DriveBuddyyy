@@ -1,7 +1,8 @@
 ﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Devices.Sensors;
+using Microsoft.Maui.Controls.Maps;
+using Microsoft.Maui.Maps;
 using System;
 using System.Threading.Tasks;
 
@@ -27,8 +28,15 @@ public partial class MainPage : ContentPage
 
                 if (location != null)
                 {
-                    double speedKmh = (location.Speed ?? 0) * 3.6; // Convert m/s to km/h
+                    double speedKmh = (location.Speed ?? 0) * 3.6;
                     SpeedLabel.Text = $"Speed: {Math.Round(speedKmh, 2)} km/h";
+
+                    // Center the map using current latitude and longitude
+                    var mapSpan = MapSpan.FromCenterAndRadius(
+                        new Location(location.Latitude, location.Longitude),
+                        Distance.FromMeters(500));
+
+                    MyMap.MoveToRegion(mapSpan);
 
                     if (double.TryParse(SpeedLimitEntry.Text, out speedLimit) && speedKmh > speedLimit)
                     {
@@ -41,7 +49,7 @@ public partial class MainPage : ContentPage
                 SpeedLabel.Text = "⚠️ Unable to access GPS.";
             }
 
-            await Task.Delay(3000); // wait 3 seconds before next update
+            await Task.Delay(3000);
         }
     }
 
@@ -57,7 +65,7 @@ public partial class MainPage : ContentPage
             }
             catch (FeatureNotSupportedException)
             {
-                // Vibration not supported
+                // Device doesn't support vibration
             }
         });
     }
