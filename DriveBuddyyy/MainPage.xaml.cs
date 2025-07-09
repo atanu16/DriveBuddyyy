@@ -5,16 +5,24 @@ using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic; //--------1
 
 namespace DriveBuddyyy;
 
 public partial class MainPage : ContentPage
 {
     double speedLimit = 10;
-
+    DateTime lastAlertTime = DateTime.MinValue;
+    private List<Location> routePoints = new(); //------2
+    private Polyline routeLine = new(); //------2
     public MainPage()
     {
         InitializeComponent();
+        //-----3
+        routeLine.StrokeColor = Colors.Blue;
+        routeLine.StrokeWidth = 5;
+        MyMap.MapElements.Add(routeLine);
+        //-----3
         StartMonitoringSpeed();
     }
 
@@ -42,6 +50,17 @@ public partial class MainPage : ContentPage
                     {
                         TriggerAlert(speedKmh);
                     }
+
+                    // Add point to trail--4
+                    routePoints.Add(new Location(location.Latitude, location.Longitude));
+
+                    // ➕ Update polyline
+                    routeLine.Geopath.Clear();
+                    foreach (var point in routePoints)
+                    {
+                        routeLine.Geopath.Add(point);
+                    }
+                    //-----4
                 }
             }
             catch
@@ -55,6 +74,11 @@ public partial class MainPage : ContentPage
 
     private void TriggerAlert(double currentSpeed)
     {
+        if ((DateTime.Now - lastAlertTime).TotalSeconds < 10)
+            return;
+
+        lastAlertTime = DateTime.Now;
+
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             await DisplayAlert("⚠️ Overspeeding Alert!", $"Speed: {Math.Round(currentSpeed, 1)} km/h", "OK");
