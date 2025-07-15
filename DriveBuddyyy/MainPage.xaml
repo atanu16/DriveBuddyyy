@@ -11,27 +11,29 @@
                   MapType="Street" />
         <!-- removed height/width constraints -->
 
-        <!-- ⚫ Speed Circle (new) -->
-        <Frame BackgroundColor="Black"
-               CornerRadius="100"
-               Padding="10"
-               HeightRequest="100"
-               WidthRequest="100"
-               VerticalOptions="Start"
-               HorizontalOptions="Start"
-               Margin="20"
-               HasShadow="True">
-            <StackLayout>
-                <!-- 🔢 Speed value -->
+       <Frame BackgroundColor="Black"
+       CornerRadius="100"
+       Padding="10"
+       HeightRequest="100"
+       WidthRequest="100"
+       HasShadow="True"
+       VerticalOptions="Start"
+       HorizontalOptions="Start"
+       Margin="20">
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Label x:Name="SpeedLabel"
-                       Text="0"
-                       FontSize="24"
-                       TextColor="White"
-                       HorizontalOptions="Center" />
-                <Label Text="speed"
-                       FontSize="12"
-                       TextColor="White"
-                       HorizontalOptions="Center" />
+               Text="0"
+               FontSize="28"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="Center" />
+                <Label Text="km/h"
+               FontSize="12"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="Center" />
             </StackLayout>
         </Frame>
 

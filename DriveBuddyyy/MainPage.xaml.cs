@@ -37,7 +37,7 @@ public partial class MainPage : ContentPage
                 if (location != null)
                 {
                     double speedKmh = (location.Speed ?? 0) * 3.6;
-                    SpeedLabel.Text = $"Speed: {Math.Round(speedKmh, 2)} km/h";
+                    SpeedLabel.Text = $"{Math.Round(speedKmh, 2)}";
 
                     // Center the map using current latitude and longitude
                     var mapSpan = MapSpan.FromCenterAndRadius(
