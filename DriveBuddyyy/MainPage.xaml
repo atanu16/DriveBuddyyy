@@ -3,25 +3,57 @@
              xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              x:Class="DriveBuddyyy.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout Spacing="25" Padding="30">
+    <Grid>
 
-            <Label Text="🚗 DriveBuddyyy - Speed Tracker" FontSize="24" HorizontalOptions="Center" />
+        <!-- 🌍 Fullscreen Google Map -->
+        <maps:Map x:Name="MyMap"
+                  IsShowingUser="True"
+                  MapType="Street" />
+        <!-- removed height/width constraints -->
 
-            <Label x:Name="SpeedLabel" Text="Speed: 0 km/h" FontSize="32" TextColor="DarkBlue" HorizontalOptions="Center" />
+        <!-- ⚫ Speed Circle (new) -->
+        <Frame BackgroundColor="Black"
+               CornerRadius="100"
+               Padding="10"
+               HeightRequest="100"
+               WidthRequest="100"
+               VerticalOptions="Start"
+               HorizontalOptions="Start"
+               Margin="20"
+               HasShadow="True">
+            <StackLayout>
+                <!-- 🔢 Speed value -->
+                <Label x:Name="SpeedLabel"
+                       Text="0"
+                       FontSize="24"
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+                <Label Text="speed"
+                       FontSize="12"
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+            </StackLayout>
+        </Frame>
 
-            <Label Text="Set Speed Limit (km/h):" FontSize="16" />
-            <Entry x:Name="SpeedLimitEntry" Text="60" Keyboard="Numeric" FontSize="16" />
+        <!-- 🔻 Speed Limit input bar (moved to bottom, new styling) -->
+        <StackLayout VerticalOptions="End"
+                     Padding="10"
+                     BackgroundColor="#EEEEEE"
+                     Orientation="Horizontal"
+                     HorizontalOptions="Center"
+                     Spacing="10"
+                     Margin="10">
+            <Label Text="Speed Limit:"
+                   FontSize="16"
+                   VerticalOptions="Center" />
+            <Entry x:Name="SpeedLimitEntry"
+                   Text="60"
+                   FontSize="16"
+                   Keyboard="Numeric"
+                   WidthRequest="80"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="White" />
+        </StackLayout>
 
-            <!-- Map Control -->
-            <maps:Map x:Name="MyMap"
-                      HeightRequest="300"
-                      WidthRequest="350"
-                      IsShowingUser="True"
-                      MapType="Street"
-                      VerticalOptions="CenterAndExpand" />
-
-        </VerticalStackLayout>
-    </ScrollView>
-
+    </Grid>
 </ContentPage>
